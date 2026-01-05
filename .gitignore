@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables
+.env
+
+# Database
+chroma_db/
+
+# Output
+output/
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store

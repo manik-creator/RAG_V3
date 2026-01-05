@@ -1,0 +1,10 @@
+langgraph
+chromadb
+groq
+langchain-groq
+langchain-community
+langchain
+sentence-transformers
+python-dotenv
+pandas
+pytest
