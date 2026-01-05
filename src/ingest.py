@@ -64,7 +64,7 @@ class AssetIngestor:
             )
             print(f"Ingested {len(ids)} records from {file_path}")
 
-    def get_sample_records(self, cloud_provider: str, asset_type: str, limit: int = 5) -> List[Dict[str, Any]]:
+    def get_sample_records(self, cloud_provider: str, asset_type: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Retrieves sample records for a specific provider and asset type."""
         results = self.collection.get(
             where={
@@ -77,6 +77,17 @@ class AssetIngestor:
         )
         
         return [json.loads(doc) for doc in results['documents']]
+
+    def get_all_records(self) -> List[Dict[str, Any]]:
+        """Retrieves all records with their metadata."""
+        results = self.collection.get(include=["documents", "metadatas"])
+        records = []
+        for doc, meta in zip(results['documents'], results['metadatas']):
+            record = json.loads(doc)
+            # Inject metadata for identification during transformation
+            record["__metadata__"] = meta
+            records.append(record)
+        return records
 
     def get_unique_pairs(self) -> List[Dict[str, str]]:
         """Identifies all unique combinations of asset_type + cloud_provider from the vector store."""
